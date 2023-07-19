@@ -23,7 +23,7 @@ export interface Info {
 
 export interface YangFilter {
   /** path/key/type should contain ALL these words */
-  marks?: string[]
+  marks: string[]
   /** only include paths starting with one of these words */
   startswith?: string[]
   tick?: boolean

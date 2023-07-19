@@ -29,13 +29,17 @@ export function loadModel(ver: string): Promise<Item[]> {
   const p2 = jsonFetchDecomp(`/yang/descriptions${ver}.lzs`).then(
     (res) => (res ?? []) as string[]
   )
-  const p3 = jsonFetchDecomp(`/yang/platforms${ver}.lzs`).then(
-    (res) => (res ?? []) as string[]
-  )
+  const p3 = jsonFetchDecomp(`/yang/platforms${ver}.lzs`)
+    .then((res) => (res ?? []) as string[])
+    .catch(() => [] as string[])
   return Promise.all([p1, p2, p3])
     .then(([dPath, dDesc, dPlat]) => {
-      console.debug(`loaded ${ver}`)
+      console.debug(`loaded ${ver}`, dPath.length, dDesc.length, dPlat.length)
       return dPath.map((s, index) => {
+        if (typeof s !== "string") {
+          console.log("undefined", index, dPath, dDesc, dPlat)
+          return {} as Item
+        }
         const sp: string[] = s.split(",")
         return {
           k: sp[0],
@@ -48,12 +52,16 @@ export function loadModel(ver: string): Promise<Item[]> {
     })
     .catch((e) => {
       console.error(`Could not load ${ver}: ${e}`)
+
       return [] as Item[]
     })
 }
 
 /** basic replacement on platform */
 function fixPlatform(s: string): string {
+  if (typeof s !== "string") {
+    return ""
+  }
   let res = ""
   s.split(",").forEach((s) => {
     if (s.startsWith("S")) s = s.replace("S", "SR-")
