@@ -1,0 +1,3 @@
+# Exclude parts of the model
+www/yang/sros/*.json
+www/yang/sros/platforms*
