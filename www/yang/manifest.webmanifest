@@ -1,0 +1,8 @@
+{
+  "name": "SR OS MD-CLI & YANG path finder",
+  "short-name": "SR OS Yang",
+  "icons": [
+    { "src": "/nokia-icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/nokia-icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}
